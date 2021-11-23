@@ -1,7 +1,6 @@
 "use strict";
 
 let chifoumi;
-let trace ="Tracage";
 
 function entierAleatoire(min, max)
 {
@@ -10,9 +9,9 @@ function entierAleatoire(min, max)
 
 //Utilisation
 //La variable contient un nombre aléatoire compris entre 1 et 10
-let playerCheck = 0;
-let computerCheck = parseInt(entierAleatoire(1, 3));
-console.log(computerCheck);
+let player = 0;
+let computer = parseInt(entierAleatoire(1, 3));
+console.log(computer);
 let computerResult;
 
 do 
@@ -20,73 +19,70 @@ do
     chifoumi = prompt("Pierre, Feuille, ou Ciseau ?").toLowerCase();
 } while (chifoumi !="pierre" && chifoumi != "feuille" && chifoumi != "ciseau");
 
-//on fait coïncider le choix de Chifoumi avec la variable playerCheck
+//on fait coïncider le choix de Chifoumi avec la variable player
 
 switch (chifoumi){
     
     case "pierre":
-       playerCheck = 1;
+       player = 1;
        break;
     case "feuille":
-        playerCheck = 2;
+        player = 2;
         break;
     case "ciseau"  :
-        playerCheck = 3;
+        player = 3;
         break;
 
 }
-console.log(playerCheck);
-//On fait coïncider computerCheck avec la variable computerResult
+console.log(player);
+//On fait coïncider computer avec la variable computerResult
 
-switch (computerCheck){
+switch (computer){
     
-    case 1:
+    case computer = 1:
        computerResult = "pierre";
        break;
-    case 2:
+    case computer = 2:
         computerResult = "feuille";
         break;
-    case 3  :
+    case computer = 3 :
         computerResult = "ciseau";
         break;
 
 }
-console.log(computerResult)
+console.log(computer, computerResult)
+// On cible la div HTML et on lui injecte le message de base.
 
 const DIV = document.querySelector("#content");
 DIV.innerHTML = `<p> Vous avez choisi ${chifoumi} et l'ordinateur a choisi ${computerResult}. </p>`;
 
 
-// On compare playerCheck et computerCheck pour donner le résultat
-switch (playerCheck){
+// On compare player et computer pour donner le résultat
 
-    case playerCheck = computerCheck:
 
-        DIV.innerHTML += `<p> Egalité parfaite! </p>`;
+if(player == computer){
     
-        break;
+    DIV.innerHTML += `<p> Egalité parfaite! </p>`;
 
-    case playerCheck < computerCheck:
+}else{
+    
+    switch (player){
+
+    case player < computer :
 
         DIV.innerHTML += `<p> ${chifoumi} perd contre ${computerResult}. </p>`;
         DIV.innerHTML += `<p> Ah là là, quel erreur du joueur français ! C'est une défaite totale ! </p>`;
         
         break;
 
-    case playerCheck > computerCheck:
+    case player > computer:
 
         
         DIV.innerHTML += `<p> ${chifoumi} gagne contre ${computerResult}. </p>`;
         DIV.innerHTML += `<p> ET C'EST LA VICTOIIIIIIIIRE ! ! </p>`;
         break;
+    }
+ }
 
-}
 
-/*if(playerCheck > computerCheck){
-    
-    DIV.innerHTML += `<p> Vous avez choisi ${chifoumi} et l'ordinateur a choisi ${computerResult}. </p>` 
-    DIV.innerHTML += `<p> ${chifoumi} bat ${computerResult}. </p>`
-    DIV.innerHTML += `<p> Vous avez gagné ! </p>`
-
-} */
 
