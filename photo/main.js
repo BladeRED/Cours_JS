@@ -6,10 +6,13 @@ let count = 0;
 
 function selectOne() {
 
-    
-    let selected = document.querySelectorAll("li.selected");
-    this.classlist.toggle("selected");
-    document.querySelector("#total em").textContent = selected.length;
+    this.classList.toggle("selected");
+    if(this.classList.contains("selected")) {
+
+        count++
+
+    }else{count--}
+    document.querySelector("#total em").textContent = count;
 
 }
 
