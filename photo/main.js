@@ -1,27 +1,20 @@
 "use strict";
 
+let count = 0;
 
-let total = 0;
+// FONCTIONS //
 
-//FONCTIONS POUR BIDOUILLER LES PHOTOS
+function selectOne() {
 
-function onClickItem(){
-
-    total += 1;
-
-let rendu = document.querySelector("#total em").innerHTML = `${total}`;
-let select = document.querySelector(".photo-list");
-select.classList.toggle("selected");
-
-console.log ("Il y a "+ total + " photos séléctionnés");
-
-};
-
-const DIV = document.querySelectorAll("li");
-
-for (let i=0; i < DIV.length; i++){
-
-DIV[i].addEventListener("click",onClickItem);
-
+    
+    let selected = document.querySelectorAll("li.selected");
+    this.classlist.toggle("selected");
+    document.querySelector("#total em").textContent = selected.length;
 
 }
+
+// CODE PRINCIPAL //
+
+const photos = document.querySelectorAll(".photo-list li");
+photos.forEach((li) => li.addEventListener("click", selectOne));
+
