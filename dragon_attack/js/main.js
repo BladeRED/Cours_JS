@@ -154,9 +154,9 @@ let message;
 
     //FIGHT !
 
-    const DIV = document.querySelector("#game").innerHTML
+    const DIV = document.querySelector("#game");
     let fight;
-    game.gameTurn = 0;
+    game.gameTurn = 1;
     game.rollDiceKnight = getRndInteger(0,100);
     game.rollDiceDragon = getRndInteger(0,100);
     console.log(game.rollDiceKnight, game.rollDiceDragon)
@@ -165,27 +165,37 @@ let message;
 
 
         if (game.rollDiceKnight == game.rollDiceDragon){
-            console.log("Vous lancez les dés pour obtenir l'initiative..."+ game.rollDiceKnight + " !" + "Quant au dragon..." + game.rollDiceDragon + " !");
-            message = "Vous frappez en même temps que le dragon. Aucun dégât n'est appliqué.";
+ 
+            DIV.innerHTML += `<h2> -----Tour ${game.gameTurn} : -----</h2>`;
+            DIV.innerHTML += `<p>Vous lancez les dés pour obtenir l'initiative... ${game.rollDiceKnight} !</p>`;
+            DIV.innerHTML += `<p>Quant au dragon... ${game.rollDiceDragon} ! </p>`;
+            DIV.innerHTML += `<p>Vous frappez en même temps que le dragon. Aucun dégât n'est appliqué.</p>`;
+            DIV.innerHTML += `<p> HP du Dragon: ${ game.hpDragon} HP / HP du Chevalier: ${game.hpKnight} HP</p>`;
             game.gameTurn += 1;
-            console.log("Tour "+ game.gameTurn +": " + message + " HP du Dragon: " + game.hpDragon + " HP / HP du Chevalier: " + game.hpKnight + " HP");
-            
 
         }else if(game.rollDiceKnight < game.rollDiceDragon){
-            console.log("Vous lancez les dés pour obtenir l'initiative..."+ game.rollDiceKnight + " !" + "Quant au dragon..." + game.rollDiceDragon + " !");
-            message = "Le dragon est plus rapide. Il vous brûle avec ses flammes brûlantes qui brûle.";
+
+            DIV.innerHTML += `<h2> -----Tour ${game.gameTurn} : -----</h2>`;
+            DIV.innerHTML += `<p>Vous lancez les dés pour obtenir l'initiative... ${game.rollDiceKnight} !</p>`;
+            DIV.innerHTML += `<p>Quant au dragon... ${game.rollDiceDragon} ! </p>`;
+            DIV.innerHTML += `<p>Le dragon est plus rapide. Il vous brûle avec ses flammes brûlantes qui brûle.</p>`;
             fight = fightTurnByTurn(game.difficulty);
             game.hpKnight -= game.dmgDragon*game.ratioArmor;
+            DIV.innerHTML += `<p> HP du Dragon: ${ game.hpDragon} HP / HP du Chevalier: ${game.hpKnight} HP</p>`;
             game.gameTurn += 1;
-            console.log("Tour "+ game.gameTurn +": " + message + " HP du Dragon: " + game.hpDragon + " HP / HP du Chevalier: " + game.hpKnight + " HP");
+            
 
         }else if(game.rollDiceKnight > game.rollDiceDragon){
-            console.log("Vous lancez les dés pour obtenir l'initiative..."+ game.rollDiceKnight + " !" + "Quant au dragon..." + game.rollDiceDragon + " !");
-            message = "Votre vitesse éblouit le dragon qui se prend une petite avoine maison.";
+
+            DIV.innerHTML += `<h2> -----Tour ${game.gameTurn} : -----</h2>`;
+            DIV.innerHTML += `<p>Vous lancez les dés pour obtenir l'initiative... ${game.rollDiceKnight} !</p>`;
+            DIV.innerHTML += `<p>Quant au dragon... ${game.rollDiceDragon} ! </p>`;
+            DIV.innerHTML += `<p> Votre vitesse éblouit le dragon qui se prend une petite avoine maison.</p>`;
             fight = fightTurnByTurn(game.difficulty);
             game.hpDragon -= game.dmgKnight*game.ratioSword;
+            DIV.innerHTML += `<p> HP du Dragon: ${ game.hpDragon} HP / HP du Chevalier: ${game.hpKnight} HP</p>`;
             game.gameTurn += 1;
-            console.log("Tour "+ game.gameTurn +": " + message + " HP du Dragon: " + game.hpDragon + " HP / HP du Chevalier: " + game.hpKnight + " HP");
+            
 
         }
         game.rollDiceKnight = getRndInteger(0,100);
@@ -195,12 +205,14 @@ let message;
 
     if (game.hpDragon <= 0){
 
-        message = "Vous triomphez du vil lézard et buvez une bière sur son cadavre.";
-        console.log(message);
+        DIV.innerHTML += `<h1> Vous triomphez du vil lézard et buvez une bière sur son cadavre.</h1>
+        <img src="img/knight.gif"/>`;
+        
 
     } else if (game.hpKnight <= 0){
 
-        message = "Vous vous êtes fait snacké comme une crevette sur la plancha d'un Nicois.";
-        console.log(message);
+        DIV.innerHTML +=`<h1> Vous vous êtes fait snacké comme une crevette sur la plancha d'un Nicois</h1>
+        <img src="img/dragon.gif"/>`;
+       
 
     }
