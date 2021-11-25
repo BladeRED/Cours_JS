@@ -17,4 +17,11 @@ console.log ("Il y a "+ total + " photos séléctionnés");
 
 };
 
-const DIV = document.querySelector(".photo-list").addEventListener("click",onClickItem);
+const DIV = document.querySelectorAll("li");
+
+for (let i=0; i < DIV.length; i++){
+
+DIV[i].addEventListener("click",onClickItem);
+
+
+}
