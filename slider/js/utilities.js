@@ -8,8 +8,8 @@
     return Math.floor(Math.random() * (max - min + 1) ) + min;
   }
 
-  number = getRndInteger(0,2) ;
-  console.log(number) ;
+ let number = getRndInteger(0,2) ;
+
 
   // Initialisation du jeu
   /*function initialiseGame(game){
