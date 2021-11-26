@@ -94,14 +94,13 @@ function randomSlider(){
 
 function startStopSlider(){
 
-    const PLAY = document.querySelector("#slider-toggle i");
+    
 // SI state.play est false, alors on lance l'intervalle, si state.play true on arrête l'intervalle//
     switch(state.play){
 
         case true : 
             window.clearInterval(start);
             state.play = false;
-            PLAY.classList.toggle("fa fa-stop");
             console.log (state.play);
             break;
 
@@ -112,14 +111,15 @@ function startStopSlider(){
                     3000
                 );
             state.play = true;
-            PLAY.classList.toggle("fa fa-stop");
             console.log (state.play);
             refreshSlider();
             break;
     };
 
-    console.log(state.index)
-    
+    console.log(state.index);
+    const PLAY = document.querySelector("#slider-toggle i");
+    PLAY.classList.toggle("fa-play");
+    PLAY.classList.toggle("fa-pause");
 }
 
 // CODE PRINCIPAL //
