@@ -12,10 +12,6 @@ legend = document.querySelector("img alt"),
 
 let state = {
 
-index = 0,
-launched = false,
-
-
 };
 
 let slides = [
@@ -29,15 +25,32 @@ let slides = [
 
 ];
 
-
-for (let i = 0; i < slides.length; i++){
-
-    console.log(slides[i]);
-}
-
 // FONCTIONS //
 
+function refreshSlider(){
 
+let img = document.querySelector("img src").innerHTML = `${slides[0].image}`;
+let figcaption = document.querySelector("figcaption").innerHTML = `${slides[0].legend}`;
+
+}
 
 
 // CODE PRINCIPAL //
+
+document.addEventListener("DOMContentLoaded", function(){
+
+state.index = 0;
+state.launched = false;
+
+
+    for (let i = 0; i < slides.length; i++){
+
+        console.log(slides[i]);
+    }
+
+refreshSlider();
+
+
+});
+
+
