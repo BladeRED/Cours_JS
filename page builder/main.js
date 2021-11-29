@@ -68,7 +68,8 @@ switch (button){
 
 // On cible le bouton qui a l'id h1 pour qu'au clic il génère un titre h1 //
 
-    button = document.querySelectorAll("aside button");
+    button = document.querySelectorAll("button:not(#export)");
+    let prout;
     console.log (button);
 
     for (let index = 0; index < button.length; index++){
