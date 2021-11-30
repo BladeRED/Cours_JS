@@ -39,7 +39,7 @@ function handleForm(event) {
   //---> vanillaJS : let user = document.querySelector("input[type='text']").value.trim();
 
   //ajouter la saisie à la liste
-  list.push(user);
+  list.unshift(user);
 
   //vide le formulaire
   $("form")[0].reset();
