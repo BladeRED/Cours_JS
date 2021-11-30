@@ -3,11 +3,7 @@
 // VARIABLES //
 
     let form;
-    let list = [];
-    let user = {};
     
-    
-
 // FONCTIONS //
 
 // Petite fonction reset des familles //
@@ -22,30 +18,55 @@
 
     function displayForm(){
 
-        $("#contact-form").toggle("hide");
+        $("#contact-form").removeClass("hide");
         let datamode = form.data("data-mode", "add");
         resetForm();
         
     };
 
+// Affiche les données du formulaire //
+
+function displayList() {
+
+    let list = JSON.parse(localStorage.getItem("userlist"));
+
+    if (list === null) list = [];
+    
+    $("#address-book").html("<ul>");
+
+for (let user of list){
+    $("#address-book ul").append(`<li>${user.lastName} ${user.firstName} ${user.phone}</li>`);
+}
+}
 
 
 // Enregistre les données saisies par l'utillisateur //
 
     function handleForm(){
 
+        // Nouveau tableau //
+        let list = JSON.parse(localStorage.getItem("userlist"));
+
+        if (list === null) list = [];
         // données à saisir //
-        user.title = $("#title option:selected").text();
-        user.lastName = $("#lastName").val().trim();
-        user.firstName = $("#firstName").val().trim();
-        user.phone = $("#phone").val().trim();
-        
+        let user = {
+            title : $("#title option:selected").text(),
+            lastName : $("#lastName").val().trim(),
+            firstName : $("#firstName").val().trim(),
+            phone : $("#phone").val().trim(),
+        };
         // on l'insére dans le tableau //
         list.push(user);
         console.log(list)
-        stockList();
+        let listJSON = JSON.stringify(list);
+        console.log(listJSON);
+        localStorage.setItem("userlist", listJSON);
+        let recupJSON = localStorage.getItem("userlist");
+        let recupComplexe = JSON.parse(recupJSON);
+        console.log(recupJSON, recupComplexe);
+        
         // on reset //
-
+        displayList();
         resetForm();
     }
     
@@ -53,15 +74,26 @@
 
     function stockList(){
 
-        let listJSON = JSON.stringify(list);
+        
         console.log(listJSON);
         localStorage.setItem("userlist", listJSON);
 
     }
+
+// Récupère le JSON dans le localStorage //
+
+    function recupList(){
+
+        let recupJSON = localStorage.getItem("userlist");
+        let recupComplexe = JSON.parse(recupJSON);
+        console.log(recupJSON, recupComplexe);
+
+    }
+
 // CODE PRINCIPAL //
 
 $(document).ready(function () {
-
+    displayList();
     form = $("#contact-form");
 
 // Au clic sur le bouton + on appelle la fonction display //
