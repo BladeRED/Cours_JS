@@ -6,6 +6,18 @@
     
 // FONCTIONS //
 
+// Charge les données //
+
+    function loadDatas(){
+
+        let datas = JSON.parse(localStorage.getItem("userlist"));
+
+        if (datas === null) datas = [];
+        return datas
+
+
+    }
+
 // Petite fonction reset des familles //
 
     function resetForm(){
@@ -26,18 +38,90 @@
 
 // Affiche les contacts//
 
-function displayList() {
+function displayContacts() {
 
-    let list = JSON.parse(localStorage.getItem("userlist"));
+    let list = loadDatas();
 
     if (list === null) list = [];
     
     $("#address-book").html("<ul>");
 
-for (let user of list){
-    $("#address-book ul").append(`<li>${user.lastName} ${user.firstName} ${user.phone}</li>`);
+    list.forEach((contact, index) => {
+    
+        $("#address-book ul").append(`<li><a data-index="${index}">${contact.lastName} ${contact.firstName} ${contact.phone}</a></li>`);
+    }
+    )
 }
-}
+
+// Affiche le détail d'un contact //
+
+    function displayDetails(){
+
+        let list = loadDatas();
+        let index = this.dataset.index;
+        let contact = list[index];
+// Affiche le nom et le prénom et le titre en détail //
+        $("#contact-details h3").text(`${displayTitle(contact.title)} ${contact.lastName} ${contact.firstName} `);
+// Affiche le téléphone //
+        $("#contact-details p").text(`${contact.phone}`);
+// Stocke l'index dans la balise éditer
+        $("#contact-details a").data("index", index);
+// Affiche le aside
+        $("#contact-details").removeClass("hide");
+// Pré-remplit le formulaire //
+        editContact(contact)
+    }
+
+// Titre à afficher //
+
+    function displayTitle(title){
+
+        let textTitle = "";
+        switch(title) {
+
+            case "1":
+                textTitle = "Mme."
+
+
+            break;
+
+            case "2":
+                textTitle = "Mlle."
+
+            break;
+
+
+            case "3":
+                textTitle = "Mr."
+
+            break;
+        }
+        return textTitle;
+    }
+
+// Edite le contact
+
+    function editContact(){
+
+// On reprend les infos //
+        displayForm();
+        let list = loadDatas();
+        let index = $("#contact-details a").data("index");
+        let contact = list[index]
+        console.log(contact);
+
+//Affiche dans le formulaire //
+
+        $("#title option:selected").text(`${contact.title}`);
+        $("#lastName").val(`${contact.lastName}`);
+        $("#firstName").val(contact.firstName);
+        $("#phone").val(contact.phone);
+
+// Cible le formulaire pour le passer en edit, ma gueule ! //
+
+        $("#contact-form").attr("data-mode","edit");
+        
+    }
 
 
 // Enregistre et gère les données saisies par l'utillisateur //
@@ -45,7 +129,7 @@ for (let user of list){
     function handleForm(){
 
         // Nouveau tableau //
-        let list = JSON.parse(localStorage.getItem("userlist"));
+        let list = loadDatas();
 
         if (list === null) list = [];
         // données à saisir //
@@ -56,8 +140,12 @@ for (let user of list){
             phone : $("#phone").val().trim(),
         };
         // on l'insére dans le tableau //
-        list.push(user);
-        console.log(list)
+        if ($("#contact-form").data('mode') == "add"){
+           list.push(user);
+            } else {
+               let index = $('#contact-details a').data('index'); 
+               list[index] = user;}
+       
         // on change notre tableau en JSON
         let listJSON = JSON.stringify(list);
         console.log(listJSON);
@@ -69,14 +157,14 @@ for (let user of list){
         console.log(recupJSON, recupComplexe);
         
         // on reset //
-        displayList();
+        displayContacts();
         resetForm();
     }
 
 // CODE PRINCIPAL //
 
 $(document).ready(function () {
-    displayList();
+    displayContacts();
     form = $("#contact-form");
 
 // Au clic sur le bouton + on appelle la fonction display //
@@ -87,4 +175,8 @@ $(document).ready(function () {
 // Au clic sur le bouton enregistrer on sauvegarde les données entrées dans le formulaire dans un tableau de contacts //
 //et on affiche les contacts //
     $("#save-contact").on("click", handleForm)
+    $("#address-book").on("click","li a", displayDetails);
+    $("aside a").on("click", editContact)
 }); 
+
+    
