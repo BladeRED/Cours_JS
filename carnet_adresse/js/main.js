@@ -24,7 +24,7 @@
         
     };
 
-// Affiche les données du formulaire //
+// Affiche les contacts//
 
 function displayList() {
 
@@ -40,7 +40,7 @@ for (let user of list){
 }
 
 
-// Enregistre les données saisies par l'utillisateur //
+// Enregistre et gère les données saisies par l'utillisateur //
 
     function handleForm(){
 
@@ -58,9 +58,12 @@ for (let user of list){
         // on l'insére dans le tableau //
         list.push(user);
         console.log(list)
+        // on change notre tableau en JSON
         let listJSON = JSON.stringify(list);
         console.log(listJSON);
+        //on le stocke dans le localStorage
         localStorage.setItem("userlist", listJSON);
+        // on récupère le JSON et on le remet en tableau
         let recupJSON = localStorage.getItem("userlist");
         let recupComplexe = JSON.parse(recupJSON);
         console.log(recupJSON, recupComplexe);
@@ -68,26 +71,6 @@ for (let user of list){
         // on reset //
         displayList();
         resetForm();
-    }
-    
-// Stocke le tableau des données en JSON dans le localStorage //
-
-    function stockList(){
-
-        
-        console.log(listJSON);
-        localStorage.setItem("userlist", listJSON);
-
-    }
-
-// Récupère le JSON dans le localStorage //
-
-    function recupList(){
-
-        let recupJSON = localStorage.getItem("userlist");
-        let recupComplexe = JSON.parse(recupJSON);
-        console.log(recupJSON, recupComplexe);
-
     }
 
 // CODE PRINCIPAL //
@@ -101,6 +84,7 @@ $(document).ready(function () {
     $("#add-contact").on("click", displayForm);
     console.log(displayForm);
 
-// Au clic sur le bouton enregistrer on sauvegarde les données entrées dans le formulaire dans un tableau de contacts
+// Au clic sur le bouton enregistrer on sauvegarde les données entrées dans le formulaire dans un tableau de contacts //
+//et on affiche les contacts //
     $("#save-contact").on("click", handleForm)
 }); 
