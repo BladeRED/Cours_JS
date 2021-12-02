@@ -47,6 +47,31 @@
 
     }
 
+    function deleteOneItem(){
+
+        let item = document.querySelector("#toAdd").value.trim();
+        list.splice(item, 1);
+        displayList();
+        console.log(list)
+
+    }
+
+    function toggleSpan(){
+
+        const POPUP = document.querySelector("#popup");
+        POPUP.classList.toggle("hide");
+
+
+    }
+
+    function closeSpan(){
+
+        const SPAN = document.querySelector("#popup");
+        SPAN.classList.add("hide");
+
+
+    }
+
 // CODE PRINCIPAL //
 
 document
@@ -61,5 +86,20 @@ document
     document
     .querySelector("#delete")
     .addEventListener("click", deleteItem);
+
+    // On cible le bouton vider un seul pour qu'au clic on affiche popup //
+    document
+    .querySelector("#deleteOne")
+    .addEventListener("click", toggleSpan);
+
+     // On cible le span pour qu'au clic on cache popup//
+     document
+     .querySelector("span")
+     .addEventListener("click", toggleSpan);
+
+    // On cible le suppr du span pour qu'au clic on supprime l'entrée choisie //
+    document
+    .querySelector("#btnDelete")
+    .addEventListener("click", deleteOneItem);
 
     console.log(list); });
