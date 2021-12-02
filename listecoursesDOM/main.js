@@ -9,11 +9,20 @@
 
 // FONCTIONS //
 
-    // ajoute un item à la liste de courses //
-    function addItem(){
+    // récupère la valeur de l'item //
 
-        // On cible l'input texte où la valeur est saisie //
-        let item = document.querySelector("#toAdd").value.trim();
+    function getValue(selector, fct){
+
+        let item = document.querySelector(selector).value.toLowerCase();
+        fct(item);
+        document.querySelector("form").reset;
+
+
+    }
+
+    // ajoute un item à la liste de courses //
+    function addItem(item){
+  
         // On l'insère dans notre tableau //
         list.push(item);
         console.log(list);
@@ -23,8 +32,7 @@
 
     // affiche la liste des courses et le nombre d'articles //
     function displayList(){
-
-        let item = document.querySelector("#toAdd").value.trim();
+        
         // On crée une constante qui cible l'ul et on lui injecte les valeurs saisies via boucle //
         const UL = document.querySelector("ul");
         UL.innerHTML = "";
@@ -47,14 +55,27 @@
 
     }
 
-    function deleteOneItem(){
-
-        let item = document.querySelector("#toAdd").value.trim();
-        list.splice(item, 1);
+    function deleteOneItem(item) {
+        console.log(list);
+      
+        // Recherche de l'emplacement (l'indice) du produit spécifié dans la liste de courses.
+        let index = list.indexOf(item);
+        console.log(index)
+      
+        // Est-ce que le produit spécifié n'a pas été trouvé ?
+        if (index == -1) {
+          // Oui, affichage d'une erreur.
+          alert("WARNING : Ce produit " + item + " n'est pas dans la liste de courses");
+      
+          // Fin de la fonction removeItem(), il ne faut pas aller plus loin.
+          return;
+        }
+      
+        // Suppression du produit spécifié dans la liste de courses (le tableau diminue de taille).
+        list.splice(index, 1);
         displayList();
-        console.log(list)
-
-    }
+        toggleSpan();
+      }
 
     function toggleSpan(){
 
@@ -78,14 +99,14 @@ document
 .addEventListener("DOMContentLoaded", function(){
 
     // On cible le submit pour qu'au clic on enregistre la valeur de l'input dans la liste de courses //
-    document
-    .querySelector("#submit")
-    .addEventListener("click", addItem);
+    document.querySelector("#submit").addEventListener("click", function () {
+        getValue("#toAdd", addItem);
+      });
 
     // On cible le bouton vider pour qu'au clic on supprime toutes les entrées du tableau //
     document
     .querySelector("#delete")
-    .addEventListener("click", deleteItem);
+    .addEventListener("click",function (){getValue("#toDelete", deleteItem)});
 
     // On cible le bouton vider un seul pour qu'au clic on affiche popup //
     document
@@ -100,6 +121,6 @@ document
     // On cible le suppr du span pour qu'au clic on supprime l'entrée choisie //
     document
     .querySelector("#btnDelete")
-    .addEventListener("click", deleteOneItem);
+    .addEventListener("click", function (){getValue("#toDelete", deleteOneItem)});
 
     console.log(list); });
